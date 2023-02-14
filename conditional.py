@@ -67,7 +67,7 @@ def chi_square_CI(df):
     for t in range(len(itertools_combinations)):
         empty.append(itertools_combinations[t])
     for x,y,i in zip(empty_1, empty_2, empty):
-        chisquare = chi_square(X=x, Y=y, Z=[], data=df, significance_level=0.95, boolean=False) #returns chi, p_value, dof
+        chisquare = chi_square(X=x, Y=y, Z=[], data=df, significance_level=0.95) #returns chi, p_value, dof
         empty_3.append([i , chisquare])
     for value in range(len(empty_3)):
         empty_4.append(value)
