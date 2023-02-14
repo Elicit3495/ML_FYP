@@ -41,7 +41,7 @@ def gaussian_reader(csv_file):
 # In[5]:
 
 
-df = csv_format_discrete('alarm_10000.dat')
+df = csv_format_discrete(r'C:\Users\User\Documents\GitHub\ML_FYP\dataset\asia_10000.dat')
 dataframe = df
 df
 
