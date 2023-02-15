@@ -1,9 +1,10 @@
-0 1 2 
-gender height weight 
-MALE 180 18
-MALE 192 19
-MALE 150 15
-MALE 176 18
-MALE 169 17
-MALE 168 17
-MALE 170 17
+A B C D E
+5 5 5 5 5
+3 1 2 3 1 
+0 2 3 2 2
+0 2 3 4 3
+1 2 2 3 0
+3 2 3 4 0
+1 1 3 4 4
+2 1 1 3 4
+2 0 2 0 2
