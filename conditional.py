@@ -75,6 +75,7 @@ def chi_square_CI(df):
         empty_5.append([x,y])
     return empty_5
 #if the chi_squared test gives true, then p_value is > significance level, hence we accept the null hypothesis, false otherwise
+<<<<<<< HEAD
 
 # In[ ]:
 
@@ -145,5 +146,12 @@ def chi_square_CI_test(df):
 
 # In[ ]:
 
+=======
+
+
+# In[38]:
+
+
+>>>>>>> parent of 9e59f29 (a)
 chi_square_CI(df)
 
