@@ -117,21 +117,20 @@ def chi_square_CI_test(df):
 # In[24]:
 
 
-v = list(df.loc[:,"Seven"])
 
 
 # In[27]:
 
 
-k = power_divergence(v, lambda_="log-likelihood")
-#returns statistics, p-value
+# k = power_divergence(v, lambda_="log-likelihood")
+# #returns statistics, p-value
 
 
-# In[30]:
+# # In[30]:
 
 
-k_ = list(k)
-k_
+# k_ = list(k)
+# k_
 
 
 # In[31]:
