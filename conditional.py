@@ -78,6 +78,7 @@ def chi_square_CI(df):
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # In[ ]:
 
 
@@ -147,6 +148,9 @@ def chi_square_CI_test(df):
 
 # In[ ]:
 
+=======
+# In[38]:
+>>>>>>> parent of 9e59f29 (a)
 =======
 # In[38]:
 >>>>>>> parent of 9e59f29 (a)
