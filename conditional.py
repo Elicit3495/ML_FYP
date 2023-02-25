@@ -192,5 +192,5 @@ def chi2return(df):
             true_list.append(i)
         if False in i:
             false_list.append(i)
-    return true_list , false_list
+    return false_list
 
