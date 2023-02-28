@@ -112,20 +112,7 @@ def chi2val(df):
     return empty_4
 
 
-# In[ ]:
-
-
-
-
-
-# In[7]:
-
-
-# def g2bool(df):
-    
-
-
-# In[10]:
+# In[8]:
 
 
 def g2(df):
@@ -159,45 +146,53 @@ def g2(df):
     return empty_4
 
 
-# In[9]:
+# In[189]:
 
 
-def chi2return(df):
+def chi2return(data):
     #just a sorting function
     true_list = []
     false_list = []
-    chi2 = chi2bool(df)
+    chi2 = data
     for i in chi2:
         if True in i:
             true_list.append(i)
         if False in i:
             false_list.append(i)
-    return false_list
+    return true_list, false_list
 
 
-# In[12]:
+# In[191]:
 
 
-def g2return(df):
+def g2return(data):
     true_list = []
     false_list = []
-    g2_return = g2(df)
+    g2_return = data
     for i in g2_return:
         if True in i:
             true_list.append(i)
         if False in i:
             false_list.append(i)
-    return false_list
+    return true_list, false_list
 
 
-# In[ ]:
+# In[188]:
 
 
-
-
-
-# In[ ]:
-
-
-
+def chi2cond(df):
+    test_list_0 = []
+    test_list_1 = []
+    test_list_2 = []
+    chi2 = []
+    v = list(df)
+    combine = list(itertools.combinations(v, 3))
+    for i in combine:
+        test_list_0.append(i[0])
+        test_list_1.append(i[1])
+        test_list_2.append(i[2])
+    for a,b,c in zip(test_list_0, test_list_1, test_list_2):
+        chisquare = chi_square(X=a, Y=b, Z=[c], data=df, significance_level=0.05, boolean=True)
+        chi2.append([a,b,c,chisquare])
+    return chi2
 
