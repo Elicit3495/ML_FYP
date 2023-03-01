@@ -146,30 +146,14 @@ def g2(df):
     return empty_4
 
 
-# In[189]:
+# In[1]:
 
 
-def chi2return(data):
+def sortReturn(data):
     #just a sorting function
     true_list = []
     false_list = []
-    chi2 = data
-    for i in chi2:
-        if True in i:
-            true_list.append(i)
-        if False in i:
-            false_list.append(i)
-    return true_list, false_list
-
-
-# In[191]:
-
-
-def g2return(data):
-    true_list = []
-    false_list = []
-    g2_return = data
-    for i in g2_return:
+    for i in data:
         if True in i:
             true_list.append(i)
         if False in i:
