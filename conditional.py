@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 import pandas as pd
@@ -17,7 +17,7 @@ from pgmpy.estimators.CITests import chi_square
 # from pgmpy.factors.continuous.discretize import BaseDiscretizer
 
 
-# In[2]:
+# In[3]:
 
 
 def csv_format_discrete(csv_file):
@@ -27,23 +27,9 @@ def csv_format_discrete(csv_file):
 #returns the csv_file in a pandas dataframe, formatted properly, discrete dataset only
 
 
-# In[3]:
-
-
-def csv_format_discrete(csv_file):
-    df = pd.read_csv(csv_file, sep="\s+")
-    return df.drop([0])
-
+# ### chi-squared test
 
 # In[4]:
-
-
-def gaussian_reader(csv_file):
-    df = pd.read_csv(csv_file, sep="\s+")
-    return df
-
-
-# In[5]:
 
 
 #how do we measure the consistensy
@@ -72,13 +58,13 @@ def chi2bool(df):
         empty_3.append(value)
         
     for x,y,i,j in zip(empty_1, empty_2, empty, empty_3):
-        chisquare = chi_square(X=x, Y=y, Z=[], data=df, significance_level=0.05, boolean=True) #returns chi, p_value, dof
+        chisquare = chi_square(X=x, Y=y, Z=[], data=df, significance_level=0.10, boolean=True) #returns chi, p_value, dof
         empty_4.append([j, i , chisquare])
         
     return empty_4
 
 
-# In[6]:
+# In[5]:
 
 
 def chi2val(df):
@@ -112,10 +98,54 @@ def chi2val(df):
     return empty_4
 
 
+# In[7]:
+
+
+#tests whether x is independent of y given a single variable z 
+def chi2condbool(df):
+    test_list_0 = []
+    test_list_1 = []
+    test_list_2 = []
+    chi2 = []
+    v = list(df)
+    combine = list(itertools.combinations(v, 3)) #nC3 
+    for i in combine:
+        test_list_0.append(i[0])
+        test_list_1.append(i[1])
+        test_list_2.append(i[2])
+    for a,b,c in zip(test_list_0, test_list_1, test_list_2):
+        chisquare = chi_square(X=a, Y=b, Z=[c], data=df, significance_level=0.05, boolean=True)
+        chi2.append([a,b,c,chisquare])
+    return chi2
+
+
 # In[8]:
 
 
-def g2(df):
+#tests whether x is independent of y given a single variable z 
+def chi2condval(df):
+    test_list_0 = []
+    test_list_1 = []
+    test_list_2 = []
+    chi2 = []
+    v = list(df)
+    combine = list(itertools.combinations(v, 3)) #nC3 
+    for i in combine:
+        test_list_0.append(i[0])
+        test_list_1.append(i[1])
+        test_list_2.append(i[2])
+    for a,b,c in zip(test_list_0, test_list_1, test_list_2):
+        chisquare = chi_square(X=a, Y=b, Z=[c], data=df, significance_level=0.05, boolean=False)
+        chi2.append([a,b,c,chisquare])
+    return chi2
+
+
+# ### log-likelihood tests
+
+# In[8]:
+
+
+def g2val(df):
 #returns a tuple(chi2, p_value, dof) if boolean = false
 #the null hypothesis is that they are independent of each other
 #if true, the p_value is higher than the significance test, we do not reject the null hypothesis
@@ -146,6 +176,12 @@ def g2(df):
     return empty_4
 
 
+# In[ ]:
+
+
+
+
+
 # In[1]:
 
 
@@ -164,19 +200,23 @@ def sortReturn(data):
 # In[188]:
 
 
-def chi2cond(df):
-    test_list_0 = []
-    test_list_1 = []
-    test_list_2 = []
-    chi2 = []
-    v = list(df)
-    combine = list(itertools.combinations(v, 3))
-    for i in combine:
-        test_list_0.append(i[0])
-        test_list_1.append(i[1])
-        test_list_2.append(i[2])
-    for a,b,c in zip(test_list_0, test_list_1, test_list_2):
-        chisquare = chi_square(X=a, Y=b, Z=[c], data=df, significance_level=0.05, boolean=True)
-        chi2.append([a,b,c,chisquare])
-    return chi2
+
+
+
+# In[1]:
+
+
+#returns a list with a tuple of combinations of false
+def false2tuple(data):
+    empty = []
+    false_list_of_tuples = []
+    new_df = pd.DataFrame(data)
+    newer_df = new_df[1]
+    return newer_df
+
+
+# In[ ]:
+
+
+
 
