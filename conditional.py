@@ -176,11 +176,7 @@ def g2val(df):
     return empty_4
 
 
-# In[ ]:
-
-
-
-
+# ### Sorting Functions
 
 # In[1]:
 
@@ -197,12 +193,6 @@ def sortReturn(data):
     return true_list, false_list
 
 
-# In[188]:
-
-
-
-
-
 # In[1]:
 
 
@@ -213,10 +203,4 @@ def false2tuple(data):
     new_df = pd.DataFrame(data)
     newer_df = new_df[1]
     return newer_df
-
-
-# In[ ]:
-
-
-
 
