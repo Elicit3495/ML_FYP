@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 import pandas as pd
 # from tabulate import tabulate
 import numpy as np
+from pygobnilp.gobnilp import Gobnilp
 # import bnlearn as bn
 import pgmpy
 import itertools
@@ -17,7 +18,7 @@ from pgmpy.estimators.CITests import chi_square
 # from pgmpy.factors.continuous.discretize import BaseDiscretizer
 
 
-# In[3]:
+# In[2]:
 
 
 def csv_format_discrete(csv_file):
@@ -27,12 +28,21 @@ def csv_format_discrete(csv_file):
 #returns the csv_file in a pandas dataframe, formatted properly, discrete dataset only
 
 
+# In[46]:
+
+
+df = csv_format_discrete(r"C:\Users\User\Documents\GitHub\ML_FYP\dataset\discrete.dat")
+df
+df_test = csv_format_discrete(r"C:\Users\User\Documents\GitHub\ML_FYP\dataset\alarm_10000.dat")
+df_test
+
+
 # ### chi-squared test
 
 # In[4]:
 
 
-#how do we measure the consistensy
+#0th order chi2 test
 def chi2bool(df):
 #returns a tuple(chi2, p_value, dof) if boolean = false
 #the null hypothesis is that they are independent of each other
@@ -58,7 +68,7 @@ def chi2bool(df):
         empty_3.append(value)
         
     for x,y,i,j in zip(empty_1, empty_2, empty, empty_3):
-        chisquare = chi_square(X=x, Y=y, Z=[], data=df, significance_level=0.10, boolean=True) #returns chi, p_value, dof
+        chisquare = chi_square(X=x, Y=y, Z=[], data=df, significance_level=0.05, boolean=True) #returns chi, p_value, dof
         empty_4.append([j, i , chisquare])
         
     return empty_4
@@ -98,7 +108,7 @@ def chi2val(df):
     return empty_4
 
 
-# In[7]:
+# In[6]:
 
 
 #tests whether x is independent of y given a single variable z 
@@ -116,10 +126,10 @@ def chi2condbool(df):
     for a,b,c in zip(test_list_0, test_list_1, test_list_2):
         chisquare = chi_square(X=a, Y=b, Z=[c], data=df, significance_level=0.05, boolean=True)
         chi2.append([a,b,c,chisquare])
-    return chi2
+    return sortReturn(chi2)
 
 
-# In[8]:
+# In[7]:
 
 
 #tests whether x is independent of y given a single variable z 
@@ -178,7 +188,7 @@ def g2val(df):
 
 # ### Sorting Functions
 
-# In[1]:
+# In[9]:
 
 
 def sortReturn(data):
@@ -193,7 +203,7 @@ def sortReturn(data):
     return true_list, false_list
 
 
-# In[1]:
+# In[10]:
 
 
 #returns a list with a tuple of combinations of false
@@ -203,4 +213,97 @@ def false2tuple(data):
     new_df = pd.DataFrame(data)
     newer_df = new_df[1]
     return newer_df
+
+
+# ### CONDITIONAL MAIN CODE
+
+# In[11]:
+
+
+#returns TRUE/FALSE Xs and Ys in a tuple of (X,Y)
+def conditional_sort(df):
+    output_false = []
+    output_true = []
+    my_list = [x for x in chi2bool(df) if False in x]
+    my_list_2 = [x for x in chi2bool(df) if True in x]
+    for i,j in zip(my_list, my_list_2):
+        output_true.append(j[1])
+        output_false.append(i[1])
+    return output_true, output_false
+
+
+# In[27]:
+
+
+#returns permutations of x,y,z where x,y does not repeat e.g (a,b,c), (b,a,c)
+def conditional_permute(df):
+    a = conditional_sort(df)[1] #obtains the list of false outputs, false output means dependent
+    k = list(itertools.permutations(df,3))
+    permute_list = []
+    for i in a:
+        permute = list(itertools.permutations(i))
+        permute_list.append(permute[1]) #returns a list of permuted items from a
+    for items in permute_list:
+        a.append(items) #adds all possible permutations to a 
+    my_list = [x for x in k if all(x[:2] != y[:2] for y in a)] #checks if all elements in x[:2] != y[:2]
+    my_list_2 = [x[:2] for x in my_list]
+    a0 = list(tuple(sorted(l)) for l in my_list_2)
+    output = [x for x in my_list if x[:2] in a0] #the three lines fixes all the permutations 
+    return output
+
+
+# In[57]:
+
+
+def conditional_chi2_2(df):
+    b0 = conditional_permute(df)
+    b_100 = []
+    for i,j,k in b0:
+        chi2 = chi_square(X=i, Y=j, Z=[k], data=df_test, significance_level=0.05)
+        b_100.append((i,j,k, chi2))
+    b_100_true = [x for x in b_100 if True in x]
+    b_100_false = [x for x in b_100 if False in x]
+    return b_100_true, b_100_false
+
+
+# In[58]:
+
+
+omega = conditional_chi2_2(df_test)
+
+
+# In[59]:
+
+
+omega
+
+
+# In[ ]:
+
+
+#returns combinations of Zs
+def conditional_combine_1(df):
+    first_empty = []
+    second_empty = []
+    my_list = conditional_sort_2(df)
+    for i in my_list:
+        first_empty.append(i[0])
+        second_empty.append(i[1])
+    list_df = list(df)
+    v = list(itertools.combinations(list_df, 2))
+    for i,j,k in zip(first_empty, second_empty, v):
+        chi_square(X=i, Y=j, Z=k, data=df)
+    return chi_square
+
+
+# In[ ]:
+
+
+m = Gobnilp()
+
+
+# In[ ]:
+
+
+m.learn(r"C:\Users\User\Documents\GitHub\ML_FYP\dataset\discrete.dat")
 
