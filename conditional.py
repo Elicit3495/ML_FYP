@@ -215,6 +215,17 @@ def false2tuple(data):
     return newer_df
 
 
+# In[60]:
+
+
+#given 2 lists, append them together and remove duplicates
+def remove_dupes(list_1, list_2):
+    for i in list_2:
+        list_1.append(i)
+    remove_dupes = list(set(list_1))
+    return remove_dupes
+
+
 # ### CONDITIONAL MAIN CODE
 
 # In[11]:
@@ -252,10 +263,10 @@ def conditional_permute(df):
     return output
 
 
-# In[57]:
+# In[1]:
 
 
-def conditional_chi2_2(df):
+def conditional_1st_order(df):
     b0 = conditional_permute(df)
     b_100 = []
     for i,j,k in b0:
@@ -266,17 +277,7 @@ def conditional_chi2_2(df):
     return b_100_true, b_100_false
 
 
-# In[58]:
-
-
-omega = conditional_chi2_2(df_test)
-
-
-# In[59]:
-
-
-omega
-
+# ### Dead functions which i may or may not remove
 
 # In[ ]:
 
@@ -294,16 +295,4 @@ def conditional_combine_1(df):
     for i,j,k in zip(first_empty, second_empty, v):
         chi_square(X=i, Y=j, Z=k, data=df)
     return chi_square
-
-
-# In[ ]:
-
-
-m = Gobnilp()
-
-
-# In[ ]:
-
-
-m.learn(r"C:\Users\User\Documents\GitHub\ML_FYP\dataset\discrete.dat")
 
