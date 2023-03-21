@@ -296,3 +296,4 @@ def conditional_combine_1(df):
         chi_square(X=i, Y=j, Z=k, data=df)
     return chi_square
 
+print(chi2bool(df))
